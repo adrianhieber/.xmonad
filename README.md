@@ -5,4 +5,5 @@ Source:
 - Xmobar: https://www.youtube.com/watch?v=jCzuMHU3Qtw
 
 Speicherort:
--Xmonad: ~.xmonad -> config: xmonad.hs
+- Xmonad: ~.xmonad -> config: xmonad.hs
+- Xmobar: ~.config -> xmobar
