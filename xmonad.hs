@@ -64,7 +64,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_p     ), spawn "dmenu_run")
     
     -- launch gridselect (eigen)
-     , ((modm, xK_s), spawnSelected def ["","firefox","nautilus","gnome-calculator","gnome-calendar","gnome-text-editor","gnome-control-center","gnome-text-editor .xmonad/xmonad.hs","shutdown -h now"])
+     , ((modm, xK_s), spawnSelected def ["","firefox","nautilus","gnome-calculator","gnome-calendar","gnome-text-editor","gnome-control-center","gnome-text-editor .xmonad/xmonad.hs","gnome-text-editor .config/xmobar/xmobar.config","shutdown -h now"])
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
