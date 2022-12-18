@@ -16,6 +16,7 @@
 - **Akt fenster wechseln:** Win+j/k
 - **Akt fenster fenster verleinern:** Win+h/l
 - **Akt Fenster umordnen:** Win+Shift+j/k
+- **Akt Fenster Ansicht:** Win+Space
 - **dmenu:** Win+p
 
 ## Screenshots
