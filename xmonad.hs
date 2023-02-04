@@ -49,7 +49,7 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#0667bd" --default: "#dddddd"
+myNormalBorderColor  = "#f542f5"--blue: "#0667bd" --default: "#dddddd"
 myFocusedBorderColor = "#33ff3d" --default: "#ff0000"
 
 ------------------------------------------------------------------------
@@ -64,7 +64,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_p     ), spawn "dmenu_run")
     
     -- launch gridselect (eigen)
-     , ((modm, xK_s), spawnSelected def ["","firefox","nautilus","gnome-calculator","gnome-calendar","gnome-text-editor","gnome-control-center","gnome-text-editor .xmonad/xmonad.hs","gnome-text-editor .config/xmobar/xmobar.config","shutdown -h now"])
+     , ((modm, xK_s), spawnSelected def ["","firefox","nautilus","gnome-calculator","gnome-calendar","gnome-text-editor","gnome-control-center","gnome-text-editor .xmonad/xmonad.hs","gnome-text-editor .config/xmobar/xmobar.config","xournalpp","pkill -SIGKILL -u adrian","shutdown -h now"])
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -184,7 +184,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 --
 --spacing 5 heist 5 pixel zwischen windows
 --
-myLayout = avoidStruts (spacing 6 $ tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -249,8 +249,11 @@ myLogHook = return ()
 -- myStartupHook = return ()
 --
 myStartupHook = do
-	spawnOnce "nitrogen --restore &" --for wallpaper
 	spawnOnce "compton &"
+	spawnOnce "nitrogen --restore &" --for wallpaper
+	spawnOnce ". /home/adrian/Dokumente/.startup_program.sh"
+	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
+	
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
