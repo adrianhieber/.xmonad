@@ -9,15 +9,25 @@
 - Xmobar: ~.config -> xmobar
 
 ## Shortkeys:
-- **Terminal:**         Win+Shift+enter
-- **Close:**           Win+Shift+c
-- **Gridselect:**       Win+s
-- **XMonad neustart:**  Win+q
-- **Akt fenster wechseln:** Win+j/k
-- **Akt fenster fenster verleinern:** Win+h/l
-- **Akt Fenster umordnen:** Win+Shift+j/k
-- **Akt Fenster Ansicht:** Win+Space
-- **dmenu:** Win+p
+| Shortkeys | Usage |
+| ------ | -------- |
+| <kbd> Win </kbd> + <kbd> Shift </kbd> + <kbd> c </kbd>  | Close activ window |
+| <kbd> Win </kbd> + <kbd> Shift </kbd> + <kbd> enter </kbd> | Terminal |
+| <kbd> Win </kbd>  + <kbd> s </kbd> | Gridselect |
+| <kbd> Win </kbd>  + <kbd> q </kbd> | Restart XMonad |
+| <kbd> Win </kbd> + <kbd> Shift </kbd> + <kbd> q </kbd> | Logout XMonad |
+| <kbd> Win </kbd>  + <kbd> j/k </kbd> | Change focus of window |
+| <kbd> Win </kbd> + <kbd> Shift </kbd> + <kbd> j/k </kbd> | Rearrange focused window arrangement |
+| <kbd> Win </kbd> + <kbd> h/l </kbd> | Change Size of focused window |
+| <kbd> Win </kbd> + <kbd> Space </kbd> | Change arrangement |
+| <kbd> Win </kbd> + <kbd> p </kbd> | dmenu | 
+| <kbd> Win </kbd> + <kbd> [1..9] </kbd> | Change to Workspace [1..9] |
+| <kbd> Win </kbd> + <kbd> Shift </kbd> + <kbd> [1..9] </kbd> | Move focuced window to Workspace [1..9] |
+| <kbd> Win </kbd> + <kbd> f </kbd> | Toggle focused widow to float |
+| <kbd> Win </kbd> + <kbd> , </kbd> | Increment number of windows in master window area |
+| <kbd> Win </kbd> + <kbd> . </kbd> | Decrement number of windows in master window area |
+| <kbd> Win </kbd> + <kbd> Left Mouse Drag </kbd> | Drag focused window out of tiling |
+| <kbd> Win </kbd> + <kbd> Right Mouse Drag </kbd> | Resize focused window, bring out of tiling if needed |
 
 ## Screenshots
 Automated window resizing, border color for focused window and beautiful Xmobar
