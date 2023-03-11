@@ -31,7 +31,9 @@
 
 ## Screenshots
 Automated window resizing, border color for focused window and beautiful Xmobar
-![Workspace example](https://user-images.githubusercontent.com/98667492/208270470-f9b30c96-3a42-4492-b537-2f90234af562.png)
+![Workspace example](https://user-images.githubusercontent.com/98667492/224510042-69eb4766-8913-4914-863b-6548d4bceae1.png)
 
-Current gridselect, needs to be improved
-![Gridselect on new Workspace](https://user-images.githubusercontent.com/98667492/208270479-3fe2fcb6-7bc0-4af9-9c89-29f340931845.png)
+![Gridselect on new Workspace](https://user-images.githubusercontent.com/98667492/224510021-f5059dc7-1840-4ecb-8a5d-1b063947c495.png)
+
+
+
