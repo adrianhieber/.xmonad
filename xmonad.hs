@@ -2,14 +2,17 @@
 
 import XMonad
 import Data.Monoid
+import Data.Maybe (fromJust)
 import System.Exit
 import XMonad.Actions.GridSelect
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
 import XMonad.Layout.Spacing
 import XMonad.Util.SpawnOnce
+import XMonad.Hooks.DynamicLog
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+import System.IO
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -26,7 +29,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 2
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -45,16 +48,38 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["dev", "file","www","sys","doc","misc","mus","vid","chat"]
+  
+myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
+
+clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
+    where i = fromJust $ M.lookup ws myWorkspaceIndices
+
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#f542f5"--blue: "#0667bd" --default: "#dddddd"
-myFocusedBorderColor = "#33ff3d" --default: "#ff0000"
+myNormalBorderColor  = "#d1a51f" --violet: "#f542f5"--blue: "#0667bd" --default: "#dddddd"
+myFocusedBorderColor = "#33ff3d" --green: "#33ff3d" --default: "#ff0000"
+
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
+
+--own gridselect for own names
+spawnSelected' :: [(String, String)] -> X ()
+spawnSelected' lst = gridselect conf lst >>= flip whenJust spawn
+  where conf = defaultGSConfig
+  
+toggleFloat w = windows (\s -> if M.member w (W.floating s)
+	then W.sink w s
+	--(hochizont start) (vertikal start) (hochizontential size) (vertikal size)
+	else (W.float w (W.RationalRect (1/140) (1/40) (1/2) (1/2)) s))
+
+  
+  
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
@@ -63,8 +88,22 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch dmenu
     , ((modm,               xK_p     ), spawn "dmenu_run")
     
+    
     -- launch gridselect (eigen)
-     , ((modm, xK_s), spawnSelected def ["","firefox","nautilus","gnome-calculator","gnome-calendar","gnome-text-editor","gnome-control-center","gnome-text-editor .xmonad/xmonad.hs","gnome-text-editor .config/xmobar/xmobar.config","xournalpp","pkill -SIGKILL -u adrian","shutdown -h now"])
+     , ((modm, xK_s), spawnSelected'
+      [("","")
+      ,("Firefox", "firefox")
+      ,("Files","nautilus")
+      ,("Rechner","gnome-calculator")
+      ,("Kalender","gnome-calendar")
+      ,("Editor","gnome-text-editor")
+      ,("Einstellungen","gnome-control-center")
+      ,("Xmonad","gnome-text-editor .xmonad/xmonad.hs")
+      ,("XmonadBar","gnome-text-editor .xmonad/xmobar/xmobar.config")
+      ,("XJounal","xournalpp")
+      --,("Ausloggen","pkill -SIGKILL -u adrian")
+      ,("Herunterfahren","shutdown -h now")])
+     
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
@@ -80,6 +119,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
+    
+    -- Toggle focued windows for float 
+    , ((modm,               xK_f     ), withFocused toggleFloat)
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
@@ -103,19 +145,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    , ((modm,               xK_Left     ), sendMessage Shrink)
 
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    , ((modm,               xK_Right     ), sendMessage Expand)
 
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    --, ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_plus ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    --, ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm              , xK_minus), sendMessage (IncMasterN (-1)))
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -130,7 +174,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
-    , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    --, ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    , ((modm, xK_h ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     ]
     ++
 
@@ -183,8 +228,10 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 --spacing 5 heist 5 pixel zwischen windows
+-- spacing 5 $ heist ueberall abstand 5 (auch full)
 --
-myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
+--myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
+myLayout = avoidStruts ( spacing 3 tiled ||| Full ||| Mirror tiled)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -251,7 +298,7 @@ myLogHook = return ()
 myStartupHook = do
 	spawnOnce "compton &"
 	spawnOnce "nitrogen --restore &" --for wallpaper
-	spawnOnce ". /home/adrian/Dokumente/.startup_program.sh"
+	spawnOnce ". /home/adrian/.config/.startup_program.sh"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
 
@@ -263,8 +310,28 @@ myStartupHook = do
 -- default: main = xmonad defaults
 --
 main = do
-	xmproc <- spawnPipe "xmobar -x 0 /home/adrian/.config/xmobar/xmobar.config"
-	xmonad $ docks defaults
+	xmproc <- spawnPipe "xmobar -x 0 /home/adrian/.xmonad/xmobar/xmobar.config"
+	xmonad $ docks $ defaults{
+		logHook = dynamicLogWithPP xmobarPP
+		                { ppOutput = hPutStrLn xmproc
+		                --, ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
+		                , ppCurrent = xmobarColor "#98be65" "" . wrap " [" "] "
+                      		--, ppVisible = wrap "(" ")"
+                      		, ppVisible = xmobarColor "#98be65" "" . clickable
+                      		, ppHidden = xmobarColor "#82AAFF" "" . wrap " *" " " . clickable
+		                --, ppHiddenNoWindows = xmobarColor "grey" ""
+		                , ppHiddenNoWindows = xmobarColor "#C792EA" "" . wrap " " " " . clickable
+		                --, ppTitle   = xmobarColor "green"  "" . shorten 40
+		                , ppTitle   = xmobarColor "#B3AFC2"  "" . shorten 60
+		                --, ppUrgent  = xmobarColor "red" "yellow"
+		                , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
+		                , ppExtras  = [windowCount]
+		                , ppSep =  " | "
+		                --, ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t] 
+		                --without window spacing:
+		                , ppOrder  = \(ws:l:t:ex) -> [ws]++ex++[t]
+		                }
+	}
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -285,14 +352,14 @@ defaults = def {
 
       -- key bindings
         keys               = myKeys,
-        mouseBindings      = myMouseBindings,
+        mouseBindings      = myMouseBindings
 
       -- hooks, layouts
-        layoutHook         = myLayout,
-        manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
-        logHook            = myLogHook,
-        startupHook        = myStartupHook
+        ,layoutHook         = myLayout
+        ,manageHook         = myManageHook <+> manageDocks
+        ,handleEventHook    = myEventHook
+        ,startupHook        = myStartupHook
+        , logHook	    = myLogHook
     }
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
