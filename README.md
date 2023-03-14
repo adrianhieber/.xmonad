@@ -43,10 +43,13 @@
 
 
 ## Screenshots
-Automated window resizing, border color for focused window and beautiful Xmobar
-![Workspace example](https://user-images.githubusercontent.com/98667492/224510042-69eb4766-8913-4914-863b-6548d4bceae1.png)
 
-![Gridselect on new Workspace](https://user-images.githubusercontent.com/98667492/224510021-f5059dc7-1840-4ecb-8a5d-1b063947c495.png)
-
+Home Screen with Xmobar
+![Main](https://user-images.githubusercontent.com/98667492/225162996-0021ee1f-ef37-4e29-a506-f99ee12622da.png)
 
 
+Automated window resizing and border color for focused window
+![Resize](https://user-images.githubusercontent.com/98667492/225163027-bcaf2d83-e782-422d-98f1-c80df89e0038.png)
+
+Gridselect
+![Gridselect on new Workspace](https://user-images.githubusercontent.com/98667492/225163132-ffa0fd31-90fd-49fe-9f86-8c77dc247173.png)
