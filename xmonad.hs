@@ -2,17 +2,19 @@
 
 import XMonad
 import Data.Monoid
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, fromMaybe)
 import System.Exit
 import XMonad.Actions.GridSelect
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
 import XMonad.Layout.Spacing
+import XMonad.Layout.NoBorders
 import XMonad.Util.SpawnOnce
 import XMonad.Hooks.DynamicLog
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import System.IO
+
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -48,7 +50,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["dev", "file","www","sys","doc","misc","mus","vid","chat"]
+myWorkspaces    = ["dev", "www","file","sys","doc","misc","mus","vid","chat"]
   
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
@@ -58,11 +60,13 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#d1a51f" --violet: "#f542f5"--blue: "#0667bd" --default: "#dddddd"
-myFocusedBorderColor = "#33ff3d" --green: "#33ff3d" --default: "#ff0000"
+myNormalBorderColor  = "#007582" --orange "#d1a51f" --violet: "#f542f5"--blue: "#0667bd" --default: "#dddddd"
+myFocusedBorderColor = "#00e5ff" --green: "#33ff3d" --default: "#ff0000"
+
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -102,14 +106,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ,("XmonadBar","gnome-text-editor .xmonad/xmobar/xmobar.config")
       ,("XJounal","xournalpp")
       --,("Ausloggen","pkill -SIGKILL -u adrian")
-      ,("Herunterfahren","shutdown -h now")])
+      ,("Herunterfahren","shutdown --poweroff now")])
      
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modm .|. shiftMask , xK_k     ), spawn "gnome-calendar")
+    , ((modm .|. shiftMask , xK_n     ), spawn "nautilus")
+    --, ((modm .|. shiftMask , xK_m    ), spawn ". /home/adrian/.config/htop/htop.sh")
 
     -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm , xK_c     ), kill)
+    , ((modm .|. shiftMask , xK_c     ), kill)
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -127,10 +135,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Tab   ), windows W.focusDown)
 
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm,               xK_Down     ), windows W.focusDown)
 
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_Up     ), windows W.focusUp  )
 
     -- Move focus to the master window
     , ((modm,               xK_m     ), windows W.focusMaster  )
@@ -139,16 +147,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_Down     ), windows W.swapDown  )
 
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_Up     ), windows W.swapUp    )
 
     -- Shrink the master area
-    , ((modm,               xK_Left     ), sendMessage Shrink)
+    , ((modm .|. shiftMask, xK_Left     ), sendMessage Shrink)
 
     -- Expand the master area
-    , ((modm,               xK_Right     ), sendMessage Expand)
+    , ((modm .|. shiftMask, xK_Right     ), sendMessage Expand)
 
     -- Push window back into tiling
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
@@ -231,8 +239,11 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- spacing 5 $ heist ueberall abstand 5 (auch full)
 --
 --myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
-myLayout = avoidStruts ( spacing 3 tiled ||| Full ||| Mirror tiled)
+myLayout = avoidStruts ( spacing pixels tiled ||| noBorders Full)
   where
+     pixels = 4
+     
+     
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
 
@@ -263,6 +274,7 @@ myLayout = avoidStruts ( spacing 3 tiled ||| Full ||| Mirror tiled)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , title =? "zenity"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -326,7 +338,7 @@ main = do
 		                --, ppUrgent  = xmobarColor "red" "yellow"
 		                , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"
 		                , ppExtras  = [windowCount]
-		                , ppSep =  " | "
+		                , ppSep =  "  |  "
 		                --, ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t] 
 		                --without window spacing:
 		                , ppOrder  = \(ws:l:t:ex) -> [ws]++ex++[t]
