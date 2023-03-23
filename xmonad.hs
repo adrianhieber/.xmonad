@@ -22,8 +22,8 @@ import System.IO
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
---myTerminal      = "tilix"
-myTerminal      = "gnome-terminal"
+--myTerminal      = "gnome-terminal"
+myTerminal      = "tilix"
 
 
 -- Whether focus follows the mouse pointer.
@@ -120,8 +120,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ,("XJounal","xournalpp")
       --,("Ausloggen","pkill -SIGKILL -u adrian")
       ,("Herunterfahren","shutdown --poweroff now")
-      ,("eDex-UI","~/eDEX-UI.Linux.x86_64.AppImage")
-      ,("Tililx", "tilix")])
+      ,("Tililx", "tilix")
+      ,("eDex-UI","~/eDEX-UI.Linux.x86_64.AppImage")])
+      
      
 
     -- launch gmrun

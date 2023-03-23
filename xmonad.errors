@@ -14,9 +14,9 @@ xmonad.hs:94:1: warning: [-Wtabs]
 94 |         then W.sink w s
    | ^^^^^^^^
 
-xmonad.hs:261:45: warning: [-Wdeprecations]
+xmonad.hs:262:45: warning: [-Wdeprecations]
     In the use of ‘spacing’ (imported from XMonad.Layout.Spacing):
     Deprecated: "Use spacingRaw instead."
     |
-261 | myLayout = avoidStruts ( noBorders Full ||| spacing pixels tiled )
+262 | myLayout = avoidStruts ( noBorders Full ||| spacing pixels tiled )
     |                                             ^^^^^^^
