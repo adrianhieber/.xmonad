@@ -45,11 +45,13 @@
 ## Screenshots
 
 Home Screen with Xmobar
-![Main](./pictures/main.png)
+<!-- ![Main](./pictures/main.png) -->
+![Main](./pictures/main_new.png)
 
 
 Automated window resizing and border color for focused window
-![Resize](./pictures/resize.png)
+<!-- ![Resize](./pictures/resize.png) -->
+![Resize](./pictures/resize_recent.png)
 
 Gridselect
 ![Gridselect on new Workspace](./pictures/gridselect.png)
