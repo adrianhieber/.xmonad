@@ -106,7 +106,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     
     -- launch gridselect (eigen)
      , ((modm, xK_s), spawnSelected'
-      [("","")
+      [("","") --do nothing
       ,("Firefox", "firefox")
       ,("Files","nautilus")
       ,("Rechner","gnome-calculator")
