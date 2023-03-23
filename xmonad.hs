@@ -118,8 +118,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ,("XJounal","xournalpp")
       --,("Ausloggen","pkill -SIGKILL -u adrian")
       ,("Herunterfahren","shutdown --poweroff now")
-      ,("Tililx", "tilix")
-      ,("eDex-UI","~/eDEX-UI.Linux.x86_64.AppImage")])
+      ,("eDex-UI","~/eDEX-UI.Linux.x86_64.AppImage")
+      ,("Tililx", "tilix")])
      
 
     -- launch gmrun
