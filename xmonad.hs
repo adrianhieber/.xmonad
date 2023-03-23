@@ -22,7 +22,8 @@ import System.IO
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "gnome-terminal"
+--myTerminal      = "gnome-terminal"
+myTerminal      = "tilix"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
