@@ -45,11 +45,11 @@
 ## Screenshots
 
 Home Screen with Xmobar
-![Main](https://user-images.githubusercontent.com/98667492/225162996-0021ee1f-ef37-4e29-a506-f99ee12622da.png)
+![Main](./pictures/main.png)
 
 
 Automated window resizing and border color for focused window
-![Resize](https://user-images.githubusercontent.com/98667492/225163027-bcaf2d83-e782-422d-98f1-c80df89e0038.png)
+![Resize](./pictures/resize.png)
 
 Gridselect
-![Gridselect on new Workspace](https://user-images.githubusercontent.com/98667492/225163132-ffa0fd31-90fd-49fe-9f86-8c77dc247173.png)
+![Gridselect on new Workspace](./pictures/gridselect.png)

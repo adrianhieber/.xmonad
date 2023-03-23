@@ -10,7 +10,10 @@ import XMonad.Util.Run
 import XMonad.Layout.Spacing
 import XMonad.Layout.NoBorders
 import XMonad.Util.SpawnOnce
+import XMonad.Operations
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageHelpers --for center floar or doRectfloat
+import XMonad.Hooks.EwmhDesktops
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import System.IO
@@ -68,6 +71,14 @@ windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
 
+
+centerWindow :: Window -> X ()
+centerWindow win = do
+    (_, W.RationalRect x y w h) <- floatLocation win
+    windows $ W.float win (W.RationalRect ((1 - w) / 2) ((1 - h) / 2) w h)
+    return ()
+
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -106,11 +117,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       ,("XmonadBar","gnome-text-editor .xmonad/xmobar/xmobar.config")
       ,("XJounal","xournalpp")
       --,("Ausloggen","pkill -SIGKILL -u adrian")
-      ,("Herunterfahren","shutdown --poweroff now")])
+      ,("Herunterfahren","shutdown --poweroff now")
+      ,("eDex-UI","~/eDEX-UI.Linux.x86_64.AppImage")])
      
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    
+    --make float center
+    , ((modm .|. shiftMask, xK_m     ), withFocused centerWindow)
+    
     , ((modm .|. shiftMask , xK_k     ), spawn "gnome-calendar")
     , ((modm .|. shiftMask , xK_n     ), spawn "nautilus")
     --, ((modm .|. shiftMask , xK_m    ), spawn ". /home/adrian/.config/htop/htop.sh")
@@ -239,7 +255,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- spacing 5 $ heist ueberall abstand 5 (auch full)
 --
 --myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
-myLayout = avoidStruts ( spacing pixels tiled ||| noBorders Full)
+myLayout = avoidStruts ( noBorders Full ||| spacing pixels tiled )
   where
      pixels = 4
      
@@ -274,7 +290,9 @@ myLayout = avoidStruts ( spacing pixels tiled ||| noBorders Full)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , title =? "zenity"           --> doFloat
+    , title =? "volume_adjuster"           --> (doRectFloat $ W.RationalRect 0.87 0.025 0.1 0.1)
+    --, title =? "Calendar"           --> doFullFloat
+    ,isFullscreen --> doFullFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -287,7 +305,7 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty
+myEventHook = XMonad.Hooks.EwmhDesktops.fullscreenEventHook
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -368,7 +386,7 @@ defaults = def {
 
       -- hooks, layouts
         ,layoutHook         = myLayout
-        ,manageHook         = myManageHook <+> manageDocks
+        ,manageHook         = myManageHook
         ,handleEventHook    = myEventHook
         ,startupHook        = myStartupHook
         , logHook	    = myLogHook
