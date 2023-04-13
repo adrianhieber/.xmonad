@@ -71,6 +71,7 @@ git clone https://github.com/adrianhieber/.xmonad.git
 install xdotool
 sudo apt-get install xdotool
 
+sudo apt-get install -y fonts-font-awesome
 
 Restart
 
