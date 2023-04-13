@@ -37,7 +37,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 3
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -67,7 +67,7 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "#007582" --orange "#d1a51f" --violet: "#f542f5"--blue: "#0667bd" --default: "#dddddd"
-myFocusedBorderColor = "#00e5ff" --green: "#33ff3d" --default: "#ff0000"
+myFocusedBorderColor = "#1fd1de"--"#00e5ff" --green: "#33ff3d" --default: "#ff0000"
 
 
 windowCount :: X (Maybe String)
@@ -260,9 +260,9 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- spacing 5 $ heist ueberall abstand 5 (auch full)
 --
 --myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
-myLayout = avoidStruts ( noBorders Full ||| spacing pixels tiled )
+myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
   where
-     pixels = 4
+     pixels = 6
      
      
      -- default tiling algorithm partitions the screen into two panes
@@ -331,9 +331,9 @@ myLogHook = return ()
 -- myStartupHook = return ()
 --
 myStartupHook = do
-	spawnOnce "compton &"
+	--spawnOnce "compton &"
 	spawnOnce "nitrogen --restore &" --for wallpaper
-	spawnOnce ". /home/adrian/.config/.startup_program.sh"
+	--spawnOnce ". /home/adrian/.config/.startup_program.sh"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
 
