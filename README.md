@@ -62,11 +62,14 @@ Gridselect
 
 ### Install
 
-`sudo apt install xmonad libghc-xmonad-contrib-dev xterm dmenu`
+`sudo apt install xmonad libghc-xmonad-contrib-dev tilix dmenu`
 
 install git
 
 git clone https://github.com/adrianhieber/.xmonad.git
+
+install xdotool
+sudo apt-get install xdotool
 
 
 Restart
