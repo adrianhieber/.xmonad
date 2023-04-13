@@ -64,5 +64,10 @@ Gridselect
 
 `sudo apt install xmonad libghc-xmonad-contrib-dev xterm dmenu`
 
+install git
+
+git clone https://github.com/adrianhieber/.xmonad.git
+
+
 Restart
 
