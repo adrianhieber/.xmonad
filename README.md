@@ -62,7 +62,7 @@ Gridselect
 
 ### Install
 
-`sudo apt install xmonad libghc-xmonad-contrib-dev tilix dmenu`
+`sudo apt install xmonad libghc-xmonad-contrib-dev xmobar tilix dmenu`
 
 install git
 
