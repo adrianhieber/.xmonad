@@ -62,16 +62,20 @@ Gridselect
 
 ### Install
 
+First install all nessecary stuff:<br>
 `sudo apt install xmonad libghc-xmonad-contrib-dev xmobar tilix dmenu`
 
-install git
+Make sure git is installed and clone:<br>
+`git clone https://github.com/adrianhieber/.xmonad.git`
 
-git clone https://github.com/adrianhieber/.xmonad.git
+install xdotool so xmobar is clickable:<br>
+`sudo apt-get install xdotool`
 
-install xdotool
-sudo apt-get install xdotool
+Additional fonts are needed for Xmobar special icons: <br>
+`sudo apt-get install -y fonts-font-awesome`
 
-sudo apt-get install -y fonts-font-awesome
+change myStartupHook to your needs or to default:<br>
+`myStartupHook = return ()`
 
-Restart
+Restart PC and at login click on the wheel in the right corner and select Xmonad
 
