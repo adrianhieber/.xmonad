@@ -55,3 +55,14 @@ Automated window resizing and border color for focused window
 
 Gridselect
 ![Gridselect on new Workspace](./pictures/gridselect.png)
+
+
+
+## Build
+
+### Install
+
+`sudo apt install xmonad libghc-xmonad-contrib-dev xterm dmenu`
+
+Restart
+
