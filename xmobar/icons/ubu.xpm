@@ -1,0 +1,38 @@
+/* XPM */
+static char *ubu[] = {
+/* columns rows colors chars-per-pixel */
+"24 24 8 1 ",
+"  c #FF5621",
+". c #FF5721",
+"X c #FF5622",
+"o c #FF5722",
+"O c #FF5723",
+"+ c #FF5822",
+"@ c #FF5823",
+"# c None",
+/* pixels */
+"##################oo####",
+"#################oooo###",
+"###########@ooo##ooooo##",
+"##########@ooooo#oooo###",
+"########@##ooooo##oo####",
+"######ooo##oooooo#######",
+"######oooo##oooooooooo##",
+"#####ooooo######ooooooo#",
+"#####ooooo########ooooo#",
+"#####ooooo########@ooooo",
+"#ooo##ooo##########ooooo",
+"ooooo#ooo###############",
+"Ooooo#ooo###############",
+"#ooo##ooo##########ooooo",
+"#####ooooo########@ooooo",
+"#####ooooo########ooooo#",
+"#####ooooo######@oooooo#",
+"######oooo##oooooooooo##",
+"#######oo##oooooo#######",
+"########o##ooooo##oo####",
+"##########oooooo#oooo###",
+"###########@ooo##ooooo##",
+"#################oooo###",
+"##################oo####"
+};
