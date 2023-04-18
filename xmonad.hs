@@ -66,8 +66,8 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#007582" --orange "#d1a51f" --violet: "#f542f5"--blue: "#0667bd" --default: "#dddddd"
-myFocusedBorderColor = "#1fd1de"--"#00e5ff" --green: "#33ff3d" --default: "#ff0000"
+myNormalBorderColor  = "#54035c"--"#007582" 
+myFocusedBorderColor = "#ca0ddb"--"#1fd1de"
 
 
 windowCount :: X (Maybe String)
@@ -332,8 +332,8 @@ myLogHook = return ()
 --
 myStartupHook = do
 	--spawnOnce "compton &"
-	spawnOnce "nitrogen --restore &" --for wallpaper
-	--spawnOnce ". /home/adrian/.config/.startup_program.sh"
+	--spawnOnce "nitrogen --restore &" --for wallpaper
+	spawnOnce ". /home/adrian/.config/.startup_program.sh"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
 
