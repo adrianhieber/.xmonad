@@ -8,7 +8,7 @@ xmonad.hs:92:16: warning: [-Wdeprecations]
    |                ^^^^^^^^^^^^^^^
 
 xmonad.hs:95:1: warning: [-Wtabs]
-    Tab character found here, and in 49 further locations.
+    Tab character found here, and in 53 further locations.
     Please use spaces instead.
    |
 95 |         then W.sink w s

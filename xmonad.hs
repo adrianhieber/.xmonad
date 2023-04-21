@@ -5,6 +5,7 @@ import Data.Monoid
 import Data.Maybe (fromJust, fromMaybe)
 import System.Exit
 import XMonad.Actions.GridSelect
+import XMonad.Actions.SpawnOn
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
 import XMonad.Layout.Spacing
@@ -66,13 +67,12 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#54035c"--"#007582" 
-myFocusedBorderColor = "#ca0ddb"--"#1fd1de"
+myNormalBorderColor  = "#ca0ddb"--"#54035c"--"#007582" 
+myFocusedBorderColor = "#1eff00"--"#ca0ddb"--"#1fd1de"
 
 
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
-
 
 
 centerWindow :: Window -> X ()
@@ -133,7 +133,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_m     ), withFocused centerWindow)
     
     , ((modm .|. shiftMask , xK_k     ), spawn "gnome-calendar")
-    , ((modm .|. shiftMask , xK_n     ), spawn "nautilus")
+    , ((modm .|. shiftMask , xK_n     ), spawnOn "file" "nautilus")
     --, ((modm .|. shiftMask , xK_m    ), spawn ". /home/adrian/.config/htop/htop.sh")
 
     -- close focused window
@@ -299,7 +299,9 @@ myManageHook = composeAll
     --, title =? "Calendar"           --> doFullFloat
     ,isFullscreen --> doFullFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore 
+    ,manageSpawn --to spwan on different workspace
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -334,6 +336,10 @@ myStartupHook = do
 	--spawnOnce "compton &"
 	--spawnOnce "nitrogen --restore &" --for wallpaper
 	spawnOnce ". /home/adrian/.config/.startup_program.sh"
+	spawnOn "chat" "threema"
+	spawnOn "chat" "google-chrome"
+	spawnOn "mus" "spotify"
+	--spawnToWorkspace "" "chat"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
 
