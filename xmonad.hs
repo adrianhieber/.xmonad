@@ -133,7 +133,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_m     ), withFocused centerWindow)
     
     , ((modm .|. shiftMask , xK_k     ), spawn "gnome-calendar")
-    , ((modm .|. shiftMask , xK_n     ), spawnOn "file" "nautilus")
+    , ((modm .|. shiftMask, xK_n     ), spawnOn "file" "nautilus")
     --, ((modm .|. shiftMask , xK_m    ), spawn ". /home/adrian/.config/htop/htop.sh")
 
     -- close focused window
@@ -194,7 +194,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
