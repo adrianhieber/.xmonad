@@ -18,8 +18,6 @@ import XMonad.Hooks.EwmhDesktops
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import System.IO
-import qualified Graphics.X11.ExtraTypes.XF86 as XF86
-import qualified XMonad.Util.Brightness as Bright
 
 
 -- The preferred terminal program, which is used in a binding below and by
@@ -207,9 +205,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     --, ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     , ((modm, xK_h ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
-    
-    ,((modm, xK_x), Bright.increase)        -- Increase screen brightness
-    , ((modm, XF86.xF86XK_MonBrightnessDown), Bright.decrease)
     ]
     ++
 
@@ -267,7 +262,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 --myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
 myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
   where
-     pixels = 6
+     pixels = 3
      
      
      -- default tiling algorithm partitions the screen into two panes
@@ -345,9 +340,9 @@ myStartupHook = do
 	spawnOnce "timedatectl set-ntp true &" --TODO Sudo??
 	spawnOnce "xsetroot -cursor_name left_ptr"
 	--spawnOnce ". /home/adrian/.config/.startup_program.sh"
-	--spawnOn "chat" "threema"
-	--spawnOn "chat" "google-chrome"
-	--spawnOn "mus" "spotify"
+	spawnOn "chat" "threema"
+	spawnOn "chat" "google-chrome"
+	spawnOn "mus" "spotify"
 	--spawnToWorkspace "" "chat"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	

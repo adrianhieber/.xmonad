@@ -1,22 +1,22 @@
 
-xmonad.hs:94:16: warning: [-Wdeprecations]
+xmonad.hs:92:16: warning: [-Wdeprecations]
     In the use of ‘defaultGSConfig’
     (imported from XMonad.Actions.GridSelect):
     Deprecated: "Use def (from Data.Default, and re-exported from XMonad.Actions.GridSelect) instead."
    |
-94 |   where conf = defaultGSConfig
+92 |   where conf = defaultGSConfig
    |                ^^^^^^^^^^^^^^^
 
-xmonad.hs:97:1: warning: [-Wtabs]
+xmonad.hs:95:1: warning: [-Wtabs]
     Tab character found here, and in 57 further locations.
     Please use spaces instead.
    |
-97 |         then W.sink w s
+95 |         then W.sink w s
    | ^^^^^^^^
 
-xmonad.hs:268:25: warning: [-Wdeprecations]
+xmonad.hs:263:25: warning: [-Wdeprecations]
     In the use of ‘spacing’ (imported from XMonad.Layout.Spacing):
     Deprecated: "Use spacingRaw instead."
     |
-268 | myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
+263 | myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
     |                         ^^^^^^^
