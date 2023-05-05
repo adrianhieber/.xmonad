@@ -18,14 +18,16 @@ import XMonad.Hooks.EwmhDesktops
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import System.IO
+import qualified Graphics.X11.ExtraTypes.XF86 as XF86
+import qualified XMonad.Util.Brightness as Bright
 
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
 
---myTerminal      = "gnome-terminal"
-myTerminal      = "tilix"
+myTerminal      = "gnome-terminal"
+--myTerminal      = "tilix"
 
 
 -- Whether focus follows the mouse pointer.
@@ -205,6 +207,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     --, ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
     , ((modm, xK_h ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
+    
+    ,((modm, xK_x), Bright.increase)        -- Increase screen brightness
+    , ((modm, XF86.xF86XK_MonBrightnessDown), Bright.decrease)
     ]
     ++
 
@@ -333,12 +338,16 @@ myLogHook = return ()
 -- myStartupHook = return ()
 --
 myStartupHook = do
-	--spawnOnce "compton &"
-	--spawnOnce "nitrogen --restore &" --for wallpaper
-	spawnOnce ". /home/adrian/.config/.startup_program.sh"
-	spawnOn "chat" "threema"
-	spawnOn "chat" "google-chrome"
-	spawnOn "mus" "spotify"
+	spawnOnce "compton &"
+	spawnOnce "nitrogen --restore &" --for wallpaper
+	spawnOnce "xinput set-prop 'ELAN2204:00 04F3:30F5 Touchpad' 'libinput Tapping Enabled' 1"
+	spawnOnce "xinput set-prop 'ELAN2204:00 04F3:30F5 Touchpad' 'libinput Natural Scrolling Enabled' 1"
+	spawnOnce "timedatectl set-ntp true &" --TODO Sudo??
+	spawnOnce "xsetroot -cursor_name left_ptr"
+	--spawnOnce ". /home/adrian/.config/.startup_program.sh"
+	--spawnOn "chat" "threema"
+	--spawnOn "chat" "google-chrome"
+	--spawnOn "mus" "spotify"
 	--spawnToWorkspace "" "chat"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
