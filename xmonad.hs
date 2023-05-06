@@ -38,7 +38,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 3
+myBorderWidth   = 2
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -67,8 +67,8 @@ clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#ca0ddb"--"#54035c"--"#007582" 
-myFocusedBorderColor = "#1eff00"--"#ca0ddb"--"#1fd1de"
+myNormalBorderColor  = "#1638cc"--"#ca0ddb"
+myFocusedBorderColor = "#f700ff"--"#1eff00"
 
 
 windowCount :: X (Maybe String)
@@ -339,7 +339,7 @@ myStartupHook = do
 	spawnOnce "xinput set-prop 'ELAN2204:00 04F3:30F5 Touchpad' 'libinput Natural Scrolling Enabled' 1"
 	spawnOnce "timedatectl set-ntp true &" --TODO Sudo??
 	spawnOnce "xsetroot -cursor_name left_ptr"
-	--spawnOnce ". /home/adrian/.config/.startup_program.sh"
+	spawnOnce ". /home/adrian/.config/.startup_program.sh"
 	spawnOn "chat" "threema"
 	spawnOn "chat" "google-chrome"
 	spawnOn "mus" "spotify"
@@ -356,6 +356,7 @@ myStartupHook = do
 --
 main = do
 	xmproc <- spawnPipe "xmobar -x 0 /home/adrian/.xmonad/xmobar/xmobar.config"
+	--xmproc2 <- spawnPipe "xmobar -x 1 /home/adrian/.xmonad/xmobar/xmobar.config"
 	xmonad $ docks $ defaults{
 		logHook = dynamicLogWithPP xmobarPP
 		                { ppOutput = hPutStrLn xmproc
