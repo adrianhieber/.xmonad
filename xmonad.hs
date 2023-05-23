@@ -57,7 +57,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["dev", "www","file","sys","doc","misc","mus","vid","chat"]
+myWorkspaces    = ["dev", "www","file","sys","doc","misc","mus","mail","chat"]
   
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
@@ -295,6 +295,7 @@ myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "brightness-controller"           --> (doRectFloat $ W.RationalRect 0.856 0.0255 0.143 0.3)
     , title =? "volume_adjuster"           --> (doRectFloat $ W.RationalRect 0.87 0.025 0.1 0.1)
     --, title =? "Calendar"           --> doFullFloat
     ,isFullscreen --> doFullFloat
@@ -340,9 +341,12 @@ myStartupHook = do
 	spawnOnce "timedatectl set-ntp true &" --TODO Sudo??
 	spawnOnce "xsetroot -cursor_name left_ptr"
 	spawnOnce ". /home/adrian/.config/.startup_program.sh"
-	spawnOn "chat" "threema"
-	spawnOn "chat" "google-chrome"
-	spawnOn "mus" "spotify"
+	--spawnOn "chat" "threema"
+	--spawnOn "chat" "google-chrome"
+	--spawnOn "mus" "spotify"
+	--spawnOn "mail" "thunderbird"
+	--spawnOn "www" "firefox"
+	--spawnOn "file" "nautilus"
 	--spawnToWorkspace "" "chat"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
