@@ -57,7 +57,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["dev", "www","file","sys","doc","misc","mus","mail","chat"]
+myWorkspaces    = ["dev", "www","file","doc","misc","sys","mus","mail","chat"]
   
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
@@ -260,7 +260,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- spacing 5 $ heist ueberall abstand 5 (auch full)
 --
 --myLayout = avoidStruts (spacing 4 tiled ||| Mirror tiled ||| Full)
-myLayout = avoidStruts (spacing pixels tiled  ||| noBorders Full)
+myLayout = avoidStruts (spacing pixels tiled  ||| noBorders tiled ||| noBorders Full)
   where
      pixels = 3
      
@@ -341,12 +341,12 @@ myStartupHook = do
 	spawnOnce "timedatectl set-ntp true &" --TODO Sudo??
 	spawnOnce "xsetroot -cursor_name left_ptr"
 	spawnOnce ". /home/adrian/.config/.startup_program.sh"
-	--spawnOn "chat" "threema"
-	--spawnOn "chat" "google-chrome"
-	--spawnOn "mus" "spotify"
-	--spawnOn "mail" "thunderbird"
-	--spawnOn "www" "firefox"
-	--spawnOn "file" "nautilus"
+	spawnOn "chat" "threema"
+	spawnOn "chat" "whatsapp-for-linux"
+	spawnOn "mus" "spotify"
+	spawnOn "mail" "thunderbird"
+	spawnOn "www" "firefox"
+	spawnOn "file" "nautilus"
 	--spawnToWorkspace "" "chat"
 	--spawnOnce "nitrogen --set-zoom-fill /home/adrian/Bilder/wallpaper/island.jpg"
 	
